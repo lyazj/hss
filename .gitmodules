@@ -1,0 +1,3 @@
+[submodule "ad-part"]
+	path = ad-part
+	url = https://github.com/lyazj/ad-part
