@@ -81,6 +81,10 @@ int main()
     // loop over entries
     for(Long64_t i = 0; i < n; ++i) {
       br_genpart_pt.read_entry(i);
+      br_genpart_eta.read_entry(i);
+      br_genpart_phi.read_entry(i);
+      br_genpart_mass.read_entry(i);
+      br_genpart_pdgId.read_entry(i);
       cout << "GenPart number of event " << setw(4) << i
         << ": " << setw(5) << br_genpart_pt.size() << endl;
       // ...
