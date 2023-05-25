@@ -79,5 +79,5 @@ message("passed test for string literal operator support")
 
 # 以下为可执行文件构建
 
-add_executable(nanogen src/nanogen.cpp ad-part/src/adenv.cpp ad-part/src/adbranch.cpp)
+add_executable(nanogen src/nanogen.cpp ad-part/src/adenv.cpp ad-part/src/adbranch.cpp ad-part/src/adfs.cpp src/adnbranch.cpp)
 target_link_libraries(nanogen ROOT::Tree)
