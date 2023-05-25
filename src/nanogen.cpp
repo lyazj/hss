@@ -3,7 +3,7 @@
 #include "adnbranch.h"
 #include "adfs.h"
 #include <TFile.h>
-#include <TChain.h>
+#include <TTree.h>
 #include <TBranch.h>
 #include <memory>
 #include <iostream>
@@ -43,42 +43,50 @@ int main()
     cout << " - " << rootfile << endl;
   }
 
-  // build TTree chain
+  // iterate over rootfile list
   const char *tree_name = "Events";
-  auto chain = make_shared<TChain>(tree_name);
   for(const string &rootfile : rootfiles) {
-    chain->AddFile(rootfile.c_str());
-  }
+    auto file = make_shared<TFile>(rootfile.c_str());
+    if(file == NULL) {
+      cerr << rootfile << ": " << "file opening failed" << endl;
+      continue;
+    }
+    auto tree = file->Get<TTree>(tree_name);
+    if(tree == NULL) {
+      cerr << rootfile << ": " << tree_name << ": object not found" << endl;
+      continue;
+    }
+    Long64_t n = tree->GetEntries();
+    cout << rootfile << ": " << n << " events" << endl;
 
-  // show available branches
-  chain->Print();
-  cout << "branches:" << endl;
-  for(const TObject *branch : *chain->GetListOfBranches()) {
-    cout << " - " << branch->GetName() << ": " << branch->ClassName() << endl;
-  }
+    // show available branches
+    cout << "branches:" << endl;
+    for(const TObject *branch : *tree->GetListOfBranches()) {
+      cout << " - " << branch->GetName() << ": " << branch->ClassName() << endl;
+    }
 
-  // register interested branches: genpart's
-  auto br_genpart_pt = get_nbranch(chain.get(), "nGenPart"_branch, "GenPart_pt"_branch);
-  auto br_genpart_eta = get_nbranch(chain.get(), "nGenPart"_branch, "GenPart_eta"_branch);
-  auto br_genpart_phi = get_nbranch(chain.get(), "nGenPart"_branch, "GenPart_phi"_branch);
-  auto br_genpart_mass = get_nbranch(chain.get(), "nGenPart"_branch, "GenPart_mass"_branch);
-  auto br_genpart_pdgId = get_nbranch(chain.get(), "nGenPart"_branch, "GenPart_pdgId"_branch);
+    // register interested branches: genpart's
+    auto br_genpart_pt = get_nbranch(tree, "nGenPart"_branch, "GenPart_pt"_branch);
+    auto br_genpart_eta = get_nbranch(tree, "nGenPart"_branch, "GenPart_eta"_branch);
+    auto br_genpart_phi = get_nbranch(tree, "nGenPart"_branch, "GenPart_phi"_branch);
+    auto br_genpart_mass = get_nbranch(tree, "nGenPart"_branch, "GenPart_mass"_branch);
+    auto br_genpart_pdgId = get_nbranch(tree, "nGenPart"_branch, "GenPart_pdgId"_branch);
 
-  // register interested branches: genjet's
-  auto br_genjet_pt = get_nbranch(chain.get(), "nGenPart"_branch, "GenPart_pt"_branch);
-  auto br_genjet_eta = get_nbranch(chain.get(), "nGenPart"_branch, "GenPart_eta"_branch);
-  auto br_genjet_phi = get_nbranch(chain.get(), "nGenPart"_branch, "GenPart_phi"_branch);
-  auto br_genjet_mass = get_nbranch(chain.get(), "nGenPart"_branch, "GenPart_mass"_branch);
+    // register interested branches: genjet's
+    auto br_genjet_pt = get_nbranch(tree, "nGenPart"_branch, "GenPart_pt"_branch);
+    auto br_genjet_eta = get_nbranch(tree, "nGenPart"_branch, "GenPart_eta"_branch);
+    auto br_genjet_phi = get_nbranch(tree, "nGenPart"_branch, "GenPart_phi"_branch);
+    auto br_genjet_mass = get_nbranch(tree, "nGenPart"_branch, "GenPart_mass"_branch);
 
-  // loop over entries
-  Long64_t n = chain->GetEntries();
-  cout << "total event number: " << n << endl;
-  for(Long64_t i = 0; i < n; ++i) {
-    br_genpart_pt.read_entry(i);
-    cout << "GenPart number of event " << setw(4) << i
-         << ": " << setw(5) << br_genpart_pt.size() << endl;
-    // ...
-    // TODO
+    // loop over entries
+    for(Long64_t i = 0; i < n; ++i) {
+      br_genpart_pt.read_entry(i);
+      cout << "GenPart number of event " << setw(4) << i
+        << ": " << setw(5) << br_genpart_pt.size() << endl;
+      // ...
+      // TODO
+    }
+
   }
 
   // goodbye
