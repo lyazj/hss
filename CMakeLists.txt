@@ -82,7 +82,6 @@ message("passed test for string literal operator support")
 
 add_library(adhep
 ad-part/src/adenv.cpp
-ad-part/src/adbranch.cpp
 ad-part/src/adfs.cpp
 ad-part/src/adnbranch.cpp
 ad-part/src/admem.cpp
