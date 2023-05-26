@@ -78,8 +78,21 @@ if(NOT RETCODE EQUAL 0)
 endif()
 message("passed test for string literal operator support")
 
+# 以下为静态库文件构建
+
+add_library(adhep
+ad-part/src/adenv.cpp
+ad-part/src/adbranch.cpp
+ad-part/src/adfs.cpp
+ad-part/src/adnbranch.cpp
+ad-part/src/admem.cpp
+)
+
+add_library(cms
+src/cms/tdrstyle.cpp
+)
+
 # 以下为可执行文件构建
 
-add_executable(nanogen src/nanogen.cpp
-ad-part/src/adenv.cpp ad-part/src/adbranch.cpp ad-part/src/adfs.cpp ad-part/src/adnbranch.cpp ad-part/src/admem.cpp)
-target_link_libraries(nanogen ROOT::Tree)
+add_executable(nanogen src/nanogen.cpp)
+target_link_libraries(nanogen adhep cms ROOT::Tree)
