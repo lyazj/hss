@@ -80,6 +80,9 @@ message("passed test for string literal operator support")
 
 # 以下为子项目构建
 
+SET(AD_NOONNX ON)
+SET(AD_NOEXEC ON)
+SET(AD_NOPDG ON)
 add_subdirectory(${AD_PART_DIR})
 
 # 以下为静态库文件构建
