@@ -2,15 +2,15 @@ cmake_minimum_required(VERSION 3.13)
 project(hss VERSION 0.0.1)
 
 # 设置项目包含目录、库目录和可执行文件目录
-include_directories(${CMAKE_SOURCE_DIR}/include)
-link_directories(${CMAKE_SOURCE_DIR}/lib)
+include_directories(${PROJECT_SOURCE_DIR}/include)
+link_directories(${PROJECT_SOURCE_DIR}/lib)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 
 # ROOT 编译选项
 if(NOT ROOT_DIR)
-    set(ROOT_DIR ${CMAKE_SOURCE_DIR}/root/cmake)
+    set(ROOT_DIR ${PROJECT_SOURCE_DIR}/root/cmake)
 endif()
 find_package(ROOT)
 set(ROOT_CC_FLAG_LIST ${ROOT_CC_FLAGS})
@@ -23,7 +23,7 @@ include_directories(${ROOT_INCLUDE_DIRS})
 
 # Delphes 编译选项
 if(NOT DELPHES_DIR)
-    set(DELPHES_DIR ${CMAKE_SOURCE_DIR}/MG5_aMC/Delphes)
+    set(DELPHES_DIR ${PROJECT_SOURCE_DIR}/MG5_aMC/Delphes)
 endif()
 set(DELPHES_INC_DIR ${DELPHES_DIR} ${DELPHES_DIR}/external)
 set(DELPHES_LIB_DIR ${DELPHES_DIR})
@@ -35,7 +35,7 @@ add_compile_definitions(LIBDELPHES_SO="${DELPHES_LIB_DIR}/libDelphes.so")
 
 # ad-part 编译选项
 if(NOT AD_PART_DIR)
-    set(AD_PART_DIR ${CMAKE_SOURCE_DIR}/ad-part)
+    set(AD_PART_DIR ${PROJECT_SOURCE_DIR}/ad-part)
 endif()
 set(AD_PART_INC_DIR ${AD_PART_DIR}/include)
 set(AD_PART_LIB_DIR ${AD_PART_DIR}/lib)
@@ -78,18 +78,13 @@ if(NOT RETCODE EQUAL 0)
 endif()
 message("passed test for string literal operator support")
 
+# 以下为子项目构建
+
+add_subdirectory(${AD_PART_DIR})
+
 # 以下为静态库文件构建
 
-add_library(adhep
-ad-part/src/adenv.cpp
-ad-part/src/adfs.cpp
-ad-part/src/adnbranch.cpp
-ad-part/src/admem.cpp
-)
-
-add_library(cms
-src/cms/tdrstyle.cpp
-)
+add_library(cms src/cms/tdrstyle.cpp)
 
 # 以下为可执行文件构建
 
