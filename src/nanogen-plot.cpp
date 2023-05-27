@@ -61,6 +61,7 @@ int main()
   }
 
   // draw Higgs pT
+  canvas->SetLeftMargin(0.15);
   chain->Draw("GenPart_pt", "GenPart_pdgId == 25");
   auto higgs_pt = (TH1F *)gPad->GetPrimitive("htemp");
   higgs_pt->SetName("higgs_pt");
@@ -68,18 +69,19 @@ int main()
   higgs_pt->SetLineColor(kBlack);
   higgs_pt->SetLineWidth(2);
   higgs_pt->SetMarkerSize(1);
-  higgs_pt->SetXTitle("NanoGen Higgs #pt");
+  higgs_pt->SetXTitle("NanoGen Higgs p_{T}");
   higgs_pt->SetYTitle("number");
   higgs_pt->GetXaxis()->SetTitleSize(0.05);
   higgs_pt->GetXaxis()->SetTitleOffset(1.1);
   higgs_pt->GetYaxis()->SetTitleSize(0.05);
-  higgs_pt->GetYaxis()->SetTitleOffset(1.1);
+  higgs_pt->GetYaxis()->SetTitleOffset(1.5);
   higgs_pt->GetXaxis()->SetRangeUser(0, 500);
   // higgs_pt->GetYaxis()->SetRangeUser(..., ...);
   CMS_lumi(canvas.get(), iPeriod, iPos);
   canvas->SaveAs("higgs_pt.pdf");
 
   // draw Higgs eta
+  canvas->SetLeftMargin(0.15);
   chain->Draw("GenPart_eta", "GenPart_pdgId == 25");
   auto higgs_eta = (TH1F *)gPad->GetPrimitive("htemp");
   higgs_eta->SetName("higgs_eta");
@@ -92,13 +94,14 @@ int main()
   higgs_eta->GetXaxis()->SetTitleSize(0.05);
   higgs_eta->GetXaxis()->SetTitleOffset(1.1);
   higgs_eta->GetYaxis()->SetTitleSize(0.05);
-  higgs_eta->GetYaxis()->SetTitleOffset(1.1);
+  higgs_eta->GetYaxis()->SetTitleOffset(1.5);
   // higgs_eta->GetXaxis()->SetRangeUser(..., ...);
   // higgs_eta->GetYaxis()->SetRangeUser(..., ...);
   CMS_lumi(canvas.get(), iPeriod, iPos);
   canvas->SaveAs("higgs_eta.pdf");
 
   // draw Higgs phi
+  canvas->SetLeftMargin(0.15);
   chain->Draw("GenPart_phi", "GenPart_pdgId == 25");
   auto higgs_phi = (TH1F *)gPad->GetPrimitive("htemp");
   higgs_phi->SetName("higgs_phi");
@@ -111,13 +114,14 @@ int main()
   higgs_phi->GetXaxis()->SetTitleSize(0.05);
   higgs_phi->GetXaxis()->SetTitleOffset(1.1);
   higgs_phi->GetYaxis()->SetTitleSize(0.05);
-  higgs_phi->GetYaxis()->SetTitleOffset(1.1);
+  higgs_phi->GetYaxis()->SetTitleOffset(1.5);
   // higgs_phi->GetXaxis()->SetRangeUser(..., ...);
   // higgs_phi->GetYaxis()->SetRangeUser(..., ...);
   CMS_lumi(canvas.get(), iPeriod, iPos);
   canvas->SaveAs("higgs_phi.pdf");
 
   // draw Higgs mass
+  canvas->SetLeftMargin(0.12);
   chain->Draw("GenPart_mass", "GenPart_pdgId == 25");
   gPad->SetLogy();
   auto higgs_mass = (TH1F *)gPad->GetPrimitive("htemp");
