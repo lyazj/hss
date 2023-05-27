@@ -151,6 +151,96 @@ int main()
     canvas->SaveAs("higgs_mass.pdf");
   }
 
+  // draw leading jet pt
+  if(!ADStat("jet_pt.pdf")) {
+    canvas->SetLeftMargin(0.15);
+    // chain->Draw("GenJet_pt", "GenJet_pt == Max$(GenJet_pt)");
+    chain->Draw("GenJet_pt", "GenJet_pt == Max$(GenJet_pt) && GenJet_pt < 500");
+    auto ldjet_pt = (TH1F *)gPad->GetPrimitive("htemp");
+    ldjet_pt->SetName("ldjet_pt");
+    ldjet_pt->SetStats(0);
+    ldjet_pt->SetLineColor(kBlack);
+    ldjet_pt->SetLineWidth(2);
+    ldjet_pt->SetMarkerSize(1);
+    ldjet_pt->SetXTitle("NanoGen leading jet p_{T}");
+    ldjet_pt->SetYTitle("number");
+    ldjet_pt->GetXaxis()->SetTitleSize(0.05);
+    ldjet_pt->GetXaxis()->SetTitleOffset(1.1);
+    ldjet_pt->GetYaxis()->SetTitleSize(0.05);
+    ldjet_pt->GetYaxis()->SetTitleOffset(1.5);
+    // ldjet_pt->GetXaxis()->SetRangeUser(..., ...);
+    // ldjet_pt->GetYaxis()->SetRangeUser(..., ...);
+    CMS_lumi(canvas.get(), iPeriod, iPos);
+    canvas->SaveAs("ldjet_pt.pdf");
+  }
+
+  // draw leading jet eta
+  if(!ADStat("jet_eta.pdf")) {
+    canvas->SetLeftMargin(0.15);
+    chain->Draw("GenJet_eta", "GenJet_pt == Max$(GenJet_pt)");
+    auto ldjet_eta = (TH1F *)gPad->GetPrimitive("htemp");
+    ldjet_eta->SetName("ldjet_eta");
+    ldjet_eta->SetStats(0);
+    ldjet_eta->SetLineColor(kBlack);
+    ldjet_eta->SetLineWidth(2);
+    ldjet_eta->SetMarkerSize(1);
+    ldjet_eta->SetXTitle("NanoGen leading jet #eta");
+    ldjet_eta->SetYTitle("number");
+    ldjet_eta->GetXaxis()->SetTitleSize(0.05);
+    ldjet_eta->GetXaxis()->SetTitleOffset(1.1);
+    ldjet_eta->GetYaxis()->SetTitleSize(0.05);
+    ldjet_eta->GetYaxis()->SetTitleOffset(1.5);
+    // ldjet_eta->GetXaxis()->SetRangeUser(..., ...);
+    // ldjet_eta->GetYaxis()->SetRangeUser(..., ...);
+    CMS_lumi(canvas.get(), iPeriod, iPos);
+    canvas->SaveAs("ldjet_eta.pdf");
+  }
+
+  // draw leading jet phi
+  if(!ADStat("jet_phi.pdf")) {
+    canvas->SetLeftMargin(0.15);
+    chain->Draw("GenJet_phi", "GenJet_pt == Max$(GenJet_pt)");
+    auto ldjet_phi = (TH1F *)gPad->GetPrimitive("htemp");
+    ldjet_phi->SetName("ldjet_phi");
+    ldjet_phi->SetStats(0);
+    ldjet_phi->SetLineColor(kBlack);
+    ldjet_phi->SetLineWidth(2);
+    ldjet_phi->SetMarkerSize(1);
+    ldjet_phi->SetXTitle("NanoGen leading jet #phi");
+    ldjet_phi->SetYTitle("number");
+    ldjet_phi->GetXaxis()->SetTitleSize(0.05);
+    ldjet_phi->GetXaxis()->SetTitleOffset(1.1);
+    ldjet_phi->GetYaxis()->SetTitleSize(0.05);
+    ldjet_phi->GetYaxis()->SetTitleOffset(1.5);
+    // ldjet_phi->GetXaxis()->SetRangeUser(..., ...);
+    // ldjet_phi->GetYaxis()->SetRangeUser(..., ...);
+    CMS_lumi(canvas.get(), iPeriod, iPos);
+    canvas->SaveAs("ldjet_phi.pdf");
+  }
+
+  // draw leading jet mass
+  if(!ADStat("jet_mass.pdf")) {
+    canvas->SetLeftMargin(0.15);
+    // chain->Draw("GenJet_mass", "GenJet_pt == Max$(GenJet_pt)");
+    chain->Draw("GenJet_mass", "GenJet_pt == Max$(GenJet_pt)");
+    auto ldjet_mass = (TH1F *)gPad->GetPrimitive("htemp");
+    ldjet_mass->SetName("ldjet_mass");
+    ldjet_mass->SetStats(0);
+    ldjet_mass->SetLineColor(kBlack);
+    ldjet_mass->SetLineWidth(2);
+    ldjet_mass->SetMarkerSize(1);
+    ldjet_mass->SetXTitle("NanoGen leading jet mass");
+    ldjet_mass->SetYTitle("number");
+    ldjet_mass->GetXaxis()->SetTitleSize(0.05);
+    ldjet_mass->GetXaxis()->SetTitleOffset(1.1);
+    ldjet_mass->GetYaxis()->SetTitleSize(0.05);
+    ldjet_mass->GetYaxis()->SetTitleOffset(1.5);
+    // ldjet_mass->GetXaxis()->SetRangeUser(..., ...);
+    // ldjet_mass->GetYaxis()->SetRangeUser(..., ...);
+    CMS_lumi(canvas.get(), iPeriod, iPos);
+    canvas->SaveAs("ldjet_mass.pdf");
+  }
+
   // goodbye
   return 0;
 }
