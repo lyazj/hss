@@ -62,7 +62,8 @@ int main()
 
   // draw Higgs pT
   canvas->SetLeftMargin(0.15);
-  chain->Draw("GenPart_pt", "GenPart_pdgId == 25");
+  // chain->Draw("GenPart_pt", "GenPart_pdgId == 25");
+  chain->Draw("GenPart_pt", "GenPart_pdgId == 25 && GenPart_pt < 500");
   auto higgs_pt = (TH1F *)gPad->GetPrimitive("htemp");
   higgs_pt->SetName("higgs_pt");
   higgs_pt->SetStats(0);
@@ -75,7 +76,7 @@ int main()
   higgs_pt->GetXaxis()->SetTitleOffset(1.1);
   higgs_pt->GetYaxis()->SetTitleSize(0.05);
   higgs_pt->GetYaxis()->SetTitleOffset(1.5);
-  higgs_pt->GetXaxis()->SetRangeUser(0, 500);
+  // higgs_pt->GetXaxis()->SetRangeUser(..., ...);
   // higgs_pt->GetYaxis()->SetRangeUser(..., ...);
   CMS_lumi(canvas.get(), iPeriod, iPos);
   canvas->SaveAs("higgs_pt.pdf");
@@ -122,7 +123,8 @@ int main()
 
   // draw Higgs mass
   canvas->SetLeftMargin(0.12);
-  chain->Draw("GenPart_mass", "GenPart_pdgId == 25");
+  // chain->Draw("GenPart_mass", "GenPart_pdgId == 25");
+  chain->Draw("GenPart_mass", "GenPart_pdgId == 25 && GenPart_mass >= 100 && GenPart_mass <= 150");
   gPad->SetLogy();
   auto higgs_mass = (TH1F *)gPad->GetPrimitive("htemp");
   higgs_mass->SetName("higgs_mass");
@@ -136,7 +138,7 @@ int main()
   higgs_mass->GetXaxis()->SetTitleOffset(1.1);
   higgs_mass->GetYaxis()->SetTitleSize(0.05);
   higgs_mass->GetYaxis()->SetTitleOffset(1.1);
-  higgs_mass->GetXaxis()->SetRangeUser(124, 126);
+  // higgs_mass->GetXaxis()->SetRangeUser(..., ...);
   // higgs_mass->GetYaxis()->SetRangeUser(..., ...);
   CMS_lumi(canvas.get(), iPeriod, iPos);
   canvas->SaveAs("higgs_mass.pdf");
