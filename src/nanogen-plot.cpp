@@ -129,10 +129,10 @@ int main()
 
   // draw Higgs mass
   if(!ADStat("higgs_mass.pdf")) {
+    gPad->SetLogy(1);
     canvas->SetLeftMargin(0.12);
     // chain->Draw("GenPart_mass", "GenPart_pdgId == 25");
     chain->Draw("GenPart_mass", "GenPart_pdgId == 25 && GenPart_mass >= 100 && GenPart_mass <= 150");
-    gPad->SetLogy();
     auto higgs_mass = (TH1F *)gPad->GetPrimitive("htemp");
     higgs_mass->SetName("higgs_mass");
     higgs_mass->SetStats(0);
@@ -149,6 +149,7 @@ int main()
     // higgs_mass->GetYaxis()->SetRangeUser(..., ...);
     CMS_lumi(canvas.get(), iPeriod, iPos);
     canvas->SaveAs("higgs_mass.pdf");
+    gPad->SetLogy(0);
   }
 
   // draw leading jet pt
