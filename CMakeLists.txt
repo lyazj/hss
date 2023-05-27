@@ -97,4 +97,4 @@ add_executable(nanogen-plot src/nanogen-plot.cpp)
 target_link_libraries(nanogen-plot adhep cms ROOT::Tree ROOT::Gpad ASImage)
 
 add_executable(nanogen-dump src/nanogen-dump.cpp)
-target_link_libraries(nanogen-dump adhep cms ROOT::Tree)
+target_link_libraries(nanogen-dump adhep ROOT::Tree)
