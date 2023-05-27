@@ -152,7 +152,7 @@ int main()
   }
 
   // draw leading jet pt
-  if(!ADStat("jet_pt.pdf")) {
+  if(!ADStat("ldjet_pt.pdf")) {
     canvas->SetLeftMargin(0.15);
     // chain->Draw("GenJet_pt", "GenJet_pt == Max$(GenJet_pt)");
     chain->Draw("GenJet_pt", "GenJet_pt == Max$(GenJet_pt) && GenJet_pt < 500");
@@ -175,7 +175,7 @@ int main()
   }
 
   // draw leading jet eta
-  if(!ADStat("jet_eta.pdf")) {
+  if(!ADStat("ldjet_eta.pdf")) {
     canvas->SetLeftMargin(0.15);
     chain->Draw("GenJet_eta", "GenJet_pt == Max$(GenJet_pt)");
     auto ldjet_eta = (TH1F *)gPad->GetPrimitive("htemp");
@@ -197,7 +197,7 @@ int main()
   }
 
   // draw leading jet phi
-  if(!ADStat("jet_phi.pdf")) {
+  if(!ADStat("ldjet_phi.pdf")) {
     canvas->SetLeftMargin(0.15);
     chain->Draw("GenJet_phi", "GenJet_pt == Max$(GenJet_pt)");
     auto ldjet_phi = (TH1F *)gPad->GetPrimitive("htemp");
@@ -219,10 +219,10 @@ int main()
   }
 
   // draw leading jet mass
-  if(!ADStat("jet_mass.pdf")) {
+  if(!ADStat("ldjet_mass.pdf")) {
     canvas->SetLeftMargin(0.15);
     // chain->Draw("GenJet_mass", "GenJet_pt == Max$(GenJet_pt)");
-    chain->Draw("GenJet_mass", "GenJet_pt == Max$(GenJet_pt)");
+    chain->Draw("GenJet_mass", "GenJet_pt == Max$(GenJet_pt) && GenJet_mass < 100");
     auto ldjet_mass = (TH1F *)gPad->GetPrimitive("htemp");
     ldjet_mass->SetName("ldjet_mass");
     ldjet_mass->SetStats(0);
