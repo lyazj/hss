@@ -20,6 +20,7 @@ separate_arguments(ROOT_CXX_FLAG_LIST)
 add_compile_options(${ROOT_CXX_FLAG_LIST})
 add_compile_definitions(${ROOT_DEFINITIONS})
 include_directories(${ROOT_INCLUDE_DIRS})
+link_directories(${ROOT_LIBRARY_DIR})
 
 # Delphes 编译选项
 if(NOT DELPHES_DIR)
@@ -87,9 +88,13 @@ add_subdirectory(${AD_PART_DIR})
 
 # 以下为静态库文件构建
 
-add_library(cms src/cms/tdrstyle.cpp)
+file(GLOB CMS_SOURCES src/cms/*.cpp)
+add_library(cms ${CMS_SOURCES})
 
 # 以下为可执行文件构建
 
-add_executable(nanogen src/nanogen.cpp)
-target_link_libraries(nanogen adhep cms ROOT::Tree)
+add_executable(nanogen-plot src/nanogen-plot.cpp)
+target_link_libraries(nanogen-plot adhep cms ROOT::Tree ROOT::Gpad ASImage)
+
+add_executable(nanogen-dump src/nanogen-dump.cpp)
+target_link_libraries(nanogen-dump adhep cms ROOT::Tree)

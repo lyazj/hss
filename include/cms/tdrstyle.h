@@ -3,6 +3,8 @@
 #include <TStyle.h>
 #include <TPad.h>
 
+// created by lyazj@github.com for compilation use
+
 // tdrGrid: Turns the grid lines on (true) or off (false)
 void tdrGrid(TStyle *tdrStyle, bool gridOn);
 
