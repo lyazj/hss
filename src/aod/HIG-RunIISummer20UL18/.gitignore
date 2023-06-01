@@ -1,6 +1,8 @@
 *
 !.gitignore
 !HIG-RunIISummer20UL18wmLHEGEN-02820
-!HIG-RunIISummer20UL18.sh
-!HIG-RunIISummer20UL18.jdl
+!HIG-RunIISummer20UL18MiniAODv2.sh
+!HIG-RunIISummer20UL18MiniAODv2.jdl
 !origin
+!log
+!output

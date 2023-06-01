@@ -47,6 +47,3 @@ cmsDriver.py --python_filename HIG-RunIISummer20UL18RECO-02334.py --eventcontent
 
 # 5_HIG-RunIISummer20UL18MiniAODv2-02334.sh
 cmsDriver.py --python_filename HIG-RunIISummer20UL18MiniAODv2-02334.py --eventcontent MINIAODSIM --customise Configuration/DataProcessing/Utils.addMonitoring --datatier MINIAODSIM --fileout file:HIG-RunIISummer20UL18MiniAODv2-02334.root --conditions 106X_upgrade2018_realistic_v16_L1v1 --step PAT --procModifiers run2_miniAOD_UL --geometry DB:Extended --filein "dbs:/WplusH_HToCC_WToLNu_M-125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL18RECO-106X_upgrade2018_realistic_v11_L1v1-v1/AODSIM" --era Run2_2018 --runUnscheduled --mc -n ${NEVENT} --nThreads ${NTHREAD}
-
-# 6_HIG-RunIISummer20UL18NanoAODv9-03236.sh
-cmsDriver.py --python_filename HIG-RunIISummer20UL18NanoAODv9-03236_1_cfg.py --eventcontent NANOEDMAODSIM --customise Configuration/DataProcessing/Utils.addMonitoring --datatier NANOAODSIM --fileout file:HIG-RunIISummer20UL18NanoAODv9-03236.root --conditions 106X_upgrade2018_realistic_v16_L1v1 --step NANO --filein "dbs:/WplusH_HToCC_WToLNu_M-125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL18MiniAODv2-106X_upgrade2018_realistic_v16_L1v1-v1/MINIAODSIM" --era Run2_2018,run2_nanoAOD_106Xv2 --mc -n ${NEVENT} --nThreads ${NTHREAD}
