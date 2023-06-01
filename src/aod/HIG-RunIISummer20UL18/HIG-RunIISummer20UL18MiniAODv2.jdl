@@ -8,7 +8,7 @@ Executable = HIG-RunIISummer20UL18MiniAODv2.sh
 NJOB = 1000
 NEVENT = 500
 NTHREAD = 4
-Arguments = $(NEVENT) $(NTHREAD) $(SEED)
+Arguments = $(NEVENT) $(NTHREAD) $(Process)
 
 requirements = (OpSysAndVer =?= "CentOS7")
 request_cpus = 4
@@ -27,4 +27,4 @@ transfer_input_files    = HIG-RunIISummer20UL18wmLHEGEN-02820
 transfer_output_files   = HIG-RunIISummer20UL18MiniAODv2-02334.root
 transfer_output_remaps  = "HIG-RunIISummer20UL18MiniAODv2-02334.root = output/HIG-RunIISummer20UL18MiniAODv2-02334_$(Cluster)_$(Process)_$(SEED).root"
 
-Queue $(NJOB) SEED in $RANDOM_INTEGER(0, 2147483647)
+Queue $(NJOB)
