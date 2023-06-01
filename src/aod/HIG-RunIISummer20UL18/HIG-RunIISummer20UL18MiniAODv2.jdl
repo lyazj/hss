@@ -8,7 +8,8 @@ Executable = HIG-RunIISummer20UL18MiniAODv2.sh
 NJOB = 1000
 NEVENT = 500
 NTHREAD = 4
-Arguments = $(NEVENT) $(NTHREAD) $(Process)
+SEED = $(Process)
+Arguments = $(NEVENT) $(NTHREAD) $(SEED)
 
 requirements = (OpSysAndVer =?= "CentOS7")
 request_cpus = 4
@@ -18,13 +19,13 @@ use_x509userproxy = false
 +JobFlavour = "tomorrow"
 
 Log    = log/HIG-RunIISummer20UL18MiniAODv2_$(Cluster)_system.log
-Output = log/HIG-RunIISummer20UL18MiniAODv2_$(Cluster)_$(Process)_$(SEED)_1.log
-Error  = log/HIG-RunIISummer20UL18MiniAODv2_$(Cluster)_$(Process)_$(SEED)_2.log
+Output = log/HIG-RunIISummer20UL18MiniAODv2_$(Cluster)_$(Process)_1.log
+Error  = log/HIG-RunIISummer20UL18MiniAODv2_$(Cluster)_$(Process)_2.log
 
 should_transfer_files   = YES
 when_to_transfer_output = ON_EXIT_OR_EVICT
 transfer_input_files    = HIG-RunIISummer20UL18wmLHEGEN-02820
 transfer_output_files   = HIG-RunIISummer20UL18MiniAODv2-02334.root
-transfer_output_remaps  = "HIG-RunIISummer20UL18MiniAODv2-02334.root = output/HIG-RunIISummer20UL18MiniAODv2-02334_$(Cluster)_$(Process)_$(SEED).root"
+transfer_output_remaps  = "HIG-RunIISummer20UL18MiniAODv2-02334.root = output/HIG-RunIISummer20UL18MiniAODv2-02334_$(Cluster)_$(Process).root"
 
 Queue $(NJOB)
