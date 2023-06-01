@@ -2,12 +2,12 @@
 # Modified by: <lyazj@github.com>
 
 if [ $# != 3 ]; then
-  >&2 echo "usage: $(basename $0) <nevent> <nthread> <seed>"
+  >&2 echo "usage: $(basename $0) <nevent> <nthread> <seed-begin> <seed-offset>"
   exit 1
 fi
 NEVENT=$1
 NTHREAD=$2
-SEED=$3
+SEED=$[$3 + $4]
 
 set -ev
 export SCRAM_ARCH=slc7_amd64_gcc700
