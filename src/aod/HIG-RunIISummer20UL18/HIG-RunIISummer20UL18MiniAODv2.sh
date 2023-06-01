@@ -1,7 +1,7 @@
 #!/bin/bash
 # Modified by: <lyazj@github.com>
 
-if [ $# != 3 ]; then
+if [ $# != 4 ]; then
   >&2 echo "usage: $(basename $0) <nevent> <nthread> <seed-begin> <seed-offset>"
   exit 1
 fi
