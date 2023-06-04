@@ -8,7 +8,7 @@ fi
 NEVENT=$1
 NTHREAD=$2
 SEED=$[$3 + $4]
-if [ -z "$5" ]; then
+if [ ! -z "$5" ]; then
     export X509_USER_PROXY="$5"
 fi
 
