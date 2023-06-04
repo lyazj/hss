@@ -16,6 +16,7 @@ set -ev
 FRAGMENT_NAME=HIG-RunIISummer20UL18wmLHEGEN-02820
 FRAGMENT="$(readlink -f ${FRAGMENT_NAME})"  # absolute path
 
+voms-proxy-info
 source /cvmfs/cms.cern.ch/cmsset_default.sh
 
 # setup scram environment with fragment installed

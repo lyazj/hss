@@ -18,7 +18,7 @@ root_dir = os.path.join(olddir, 'output')
 log_dir_new = os.path.join(newdir, 'log')
 root_dir_new = os.path.join(newdir, 'output')
 re_log_name = re.compile(r'^([^_]+)_(\d+)_(\d+)_(\d+)_([12]).log$')
-re_root_name = re.compile(r'^([^_]+)_(\d+)_(\d+)_(\d+).root$')
+re_root_name = re.compile(r'^([^_]+)-\d+_(\d+)_(\d+)_(\d+).root$')
 
 # List a directory and index it with re-groups.
 def lsdir_re(pattern, path=None, flags=0):
@@ -34,7 +34,7 @@ log_names = lsdir_re(re_log_name, log_dir)
 root_names = lsdir_re(re_root_name, root_dir)
 
 # Fetch corresponding log names for a root re-group.
-def get_log_names(root_reg):
+def get_log_matches(root_reg):
     return [log_names.get((*root_reg, i), None) for i in ('1', '2')]
 
 # Parse condor query summary message.
@@ -58,14 +58,15 @@ for root_reg, root_name in root_names.items():
     print(f'found: {root_name}')
 
     # First, make sure that the three names all exist.
-    log_names = get_log_names(root_reg)
-    if any(log_name is None for log_name in log_names): continue
+    log_matches = get_log_matches(root_reg)
+    if any(log_match is None for log_match in log_matches): continue
 
     # Then, consult condor about the corresponding job status.
-    # Only migrate a job after it is removed from condor job list.
+    # Only migrate a job after it is held or removed from condor job list.
     msg = os.popen(f'condor_q {root_reg[1]}.{root_reg[3]}').read()
-    if not any(parse_condor_msg(msg)): continue
+    jobs, _, _, _, _, held, _ = map(int, parse_condor_msg(msg))
+    if jobs and not held: continue
 
     # Finally, the real job.
     print(f'migrating: {root_name}')
-    migrate(root_name, log_names)
+    migrate(root_name, log_matches)
