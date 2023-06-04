@@ -1,5 +1,6 @@
 *
 !.gitignore
+!x509up-gen
 !HIG-RunIISummer20UL18wmLHEGEN-02820
 !HIG-RunIISummer20UL18MiniAODv2.sh
 !HIG-RunIISummer20UL18MiniAODv2.jdl

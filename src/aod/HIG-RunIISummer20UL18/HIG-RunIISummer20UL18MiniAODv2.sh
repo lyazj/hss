@@ -1,13 +1,16 @@
 #!/bin/bash
 # Modified by: <lyazj@github.com>
 
-if [ $# != 4 ]; then
-    >&2 echo "usage: $(basename $0) <nevent> <nthread> <seed-begin> <seed-offset>"
+if [ $# != 4 ] && [ $# != 5 ]; then
+    >&2 echo "usage: $(basename $0) <nevent> <nthread> <seed-begin> <seed-offset> [<x509up>]"
     exit 1
 fi
 NEVENT=$1
 NTHREAD=$2
 SEED=$[$3 + $4]
+if [ -z "$5" ]; then
+    export X509_USER_PROXY="$5"
+fi
 
 set -ev
 FRAGMENT_NAME=HIG-RunIISummer20UL18wmLHEGEN-02820
