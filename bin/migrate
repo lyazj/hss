@@ -62,10 +62,9 @@ for root_reg, root_name in root_names.items():
     if any(log_name is None for log_name in log_names): continue
 
     # Then, consult condor about the corresponding job status.
-    # Only migrate a job in its completed, removed or held status.
+    # Only migrate a job after it is removed from condor job list.
     msg = os.popen(f'condor_q {root_reg[1]}.{root_reg[3]}').read()
-    _, completed, removed, _, _, held, _ = parse_condor_msg(msg)
-    if not any((completed, removed, held)): continue
+    if not any(parse_condor_msg(msg)): continue
 
     # Finally, the real job.
     print(f'migrating: {root_name}')
