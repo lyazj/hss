@@ -10,6 +10,9 @@ NTHREAD=$2
 SEED=$[$3 + $4]
 if [ ! -z "$5" ]; then
     export X509_USER_PROXY="$5"
+    if ! voms-proxy-info -file /tmp/x509up_u${UID}; then
+        cp ${X509_USER_PROXY} /tmp/x509up_u${UID}
+    fi
 fi
 
 set -ev
