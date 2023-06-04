@@ -12,39 +12,44 @@ SEED=$[$3 + $4]
 set -ev
 FRAGMENT_NAME=HIG-RunIISummer20UL18wmLHEGEN-02820
 FRAGMENT="$(readlink -f ${FRAGMENT_NAME})"  # absolute path
-PYTHON_DIR=Configuration/GenProduction/python  # w.r.t. ${SCRAM_RLSE}/src
-FRAGMENT_COPY=${PYTHON_DIR}/${FRAGMENT_NAME}_copy.py
 
 source /cvmfs/cms.cern.ch/cmsset_default.sh
 
+# setup scram environment with fragment installed
 scram_setup() {
+    # scram configuration
+    # NOTE: external environment variable ${SCRAM_ARCH} is required to be set
     if [ $# != 2 ]; then
         >&2 echo "usage: $(basename $0) <arch> <rlse>"
         exit 1
     fi
     export SCRAM_ARCH=$1
     export SCRAM_RLSE=$2
+
+    # fragment configuration
+    # NOTE: the procedure sets global environment variable ${FRAGMENT_COPY}
+    local PYTHON_DIR=Configuration/GenProduction/python  # w.r.t. ${SCRAM_RLSE}/src
+    FRAGMENT_COPY=${PYTHON_DIR}/${FRAGMENT_NAME}_copy.py
+
+    # scram creation
     if [ -r ${SCRAM_RLSE}/src ] ; then
         echo release ${SCRAM_RLSE} already exists
     else
         scram p CMSSW ${SCRAM_RLSE}
     fi
+
+    # scram initialization
+    # NOTE: copy fragment in before building scram
     pushd ${SCRAM_RLSE}/src  # ******************** $PWD changed ********************
     eval `scram runtime -sh`
-    scram b -j ${NTHREAD}
-    popd  # ******************** $PWD restored ********************
-}
-
-copy_fragment() {
-    pushd ${SCRAM_RLSE}/src  # ******************** $PWD changed ********************
     mkdir -p ${PYTHON_DIR}
     sed s/__TO_BE_REPLACED_NEVENT/${NEVENT}/g "${FRAGMENT}" > ${FRAGMENT_COPY}
+    scram b -j ${NTHREAD}
     popd  # ******************** $PWD restored ********************
 }
 
 # 0_HIG-RunIISummer20UL18wmLHEGEN-02820.sh
 scram_setup slc7_amd64_gcc700 CMSSW_10_6_28
-copy_fragment
 cmsDriver.py ${FRAGMENT_COPY} --python_filename HIG-RunIISummer20UL18wmLHEGEN-02820.py --eventcontent RAWSIM,LHE --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN,LHE --fileout file:HIG-RunIISummer20UL18wmLHEGEN-02820.root --conditions 106X_upgrade2018_realistic_v4 --beamspot Realistic25ns13TeVEarly2018Collision --customise_commands 'process.RandomNumberGeneratorService.externalLHEProducer.initialSeed=int('${SEED}')\nprocess.source.numberEventsInLuminosityBlock=cms.untracked.uint32(100)' --step LHE,GEN --geometry DB:Extended --era Run2_2018 --mc -n ${NEVENT} --nThreads ${NTHREAD}
 
 # 1_HIG-RunIISummer20UL18SIM-02334.sh
