@@ -1,0 +1,70 @@
+#!/usr/bin/env python3
+
+import os
+import sys
+import re
+
+# Get user-specified current working directory.
+if len(sys.argv) != 3:
+    print(f'usage: {os.path.basename(sys.argv[0])} <olddir> <newdir>', file=sys.stderr)
+    sys.exit(1)
+olddir = sys.argv[1]
+newdir = sys.argv[2]
+
+# Get searching paths and matching patterns.
+log_dir = os.path.join(olddir, 'log')
+root_dir = os.path.join(olddir, 'output')
+log_dir_new = os.path.join(newdir, 'log')
+root_dir_new = os.path.join(newdir, 'output')
+re_log_name = re.compile(r'^([^_]+)_(\d+)_(\d+)_(\d+)_([12]).log$')
+re_root_name = re.compile(r'^([^_]+)_(\d+)_(\d+)_(\d+).root$')
+
+# List a directory and index it with re-groups.
+def lsdir_re(pattern, path=None, flags=0):
+    results = { }
+    for name in os.lsdir(path):
+        result = re.search(pattern, name, flags)
+        if result is None: continue
+        results[result.groups()] = name
+    return results
+
+# Get re-group-indexed log and root names.
+log_names = lsdir_re(re_log_name, log_dir)
+root_names = lsdir_re(re_root_name, root_dir)
+
+# Fetch corresponding log names for a root re-group.
+def get_log_names(root_reg):
+    return [log_names.get((*root_reg, i), None) for i in ('1', '2')]
+
+# Parse condor query summary message.
+re_condor_msg = re.compile(r'Total for query: (\d) jobs;'
+                           r' (\d) completed, (\d) removed, (\d) idle,'
+                           r' (\d) running, (\d) held, (\d) suspended')
+def parse_condor_msg(msg):
+    result = re.search(parse_condor_msg, msg)
+    if result is None:
+        raise RuntimeError(f'message not understood: {msg}')
+    return result.groups()
+
+# Migrate a job from olddir to newdir for presidency.
+def migrate(root_name, log_names):
+    os.rename(os.path.join(root_dir, root_name), os.path.join(root_dir_new, root_name))
+    os.rename(os.path.join(log_dir, log_name), os.path.join(log_dir_new, log_name))
+
+# The main routine.
+for root_reg, root_name in root_names:
+    print(f'found: {root_name}')
+
+    # First, make sure that the three names all exist.
+    log_names = get_log_names(root_reg)
+    if any(log_name is None for log_name in log_names): continue
+
+    # Then, consult condor about the corresponding job status.
+    # Only migrate a job in its completed, removed or held status.
+    msg = os.popen(f'condor_q {root_reg[1]}.{root_reg[3]}').read()
+    _, completed, removed, _, _, held, _ = parse_condor_msg(msg)
+    if not any((completed, removed, held)): continue
+
+    # Finally, the real job.
+    print(f'migrating: {root_name}')
+    migrate(root_name, log_names)
