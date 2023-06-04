@@ -5,10 +5,10 @@ Executable = HIG-RunIISummer20UL18MiniAODv2.sh
 
 +ProjectName="cms.org.cern"
 
-NJOB = 4000
+NJOB = 1000
 NEVENT = 100
 NTHREAD = 4
-SEED_BEGIN = 2001
+SEED_BEGIN = 6001
 SEED_OFFSET = $(Process)
 Arguments = $(NEVENT) $(NTHREAD) $(SEED_BEGIN) $(SEED_OFFSET)
 
