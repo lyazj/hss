@@ -5,8 +5,8 @@ Executable = HIG-RunIISummer20UL18MiniAODv2.sh
 
 +ProjectName="cms.org.cern"
 
-NJOB = 1000
-NEVENT = 500
+NJOB = 5000
+NEVENT = 100
 NTHREAD = 4
 SEED_BEGIN = 1
 SEED_OFFSET = $(Process)
@@ -25,7 +25,7 @@ Error  = log/HIG-RunIISummer20UL18MiniAODv2_$(Cluster)_$(SEED_BEGIN)_$(SEED_OFFS
 
 should_transfer_files   = YES
 when_to_transfer_output = ON_EXIT_OR_EVICT
-transfer_input_files    = HIG-RunIISummer20UL18wmLHEGEN-02820
+transfer_input_files    = HIG-RunIISummer20UL18wmLHEGEN-02820, subroutine/0_HIG-RunIISummer20UL18wmLHEGEN-02820.sh, subroutine/1_HIG-RunIISummer20UL18SIM-02334.sh, subroutine/2_HIG-RunIISummer20UL18DIGIPremix-02315.sh, subroutine/3_HIG-RunIISummer20UL18HLT-02334.sh, subroutine/4_HIG-RunIISummer20UL18RECO-02334.sh, subroutine/5_HIG-RunIISummer20UL18MiniAODv2-02334.sh
 transfer_output_files   = HIG-RunIISummer20UL18MiniAODv2-02334.root
 transfer_output_remaps  = "HIG-RunIISummer20UL18MiniAODv2-02334.root = output/HIG-RunIISummer20UL18MiniAODv2-02334_$(Cluster)_$(SEED_BEGIN)_$(SEED_OFFSET).root"
 
