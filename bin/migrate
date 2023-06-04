@@ -3,6 +3,7 @@
 import os
 import sys
 import re
+import shutil
 
 # Get user-specified current working directory.
 if len(sys.argv) != 3:
@@ -22,7 +23,7 @@ re_root_name = re.compile(r'^([^_]+)_(\d+)_(\d+)_(\d+).root$')
 # List a directory and index it with re-groups.
 def lsdir_re(pattern, path=None, flags=0):
     results = { }
-    for name in os.lsdir(path):
+    for name in os.listdir(path):
         result = re.search(pattern, name, flags)
         if result is None: continue
         results[result.groups()] = name
@@ -41,18 +42,19 @@ re_condor_msg = re.compile(r'Total for query: (\d) jobs;'
                            r' (\d) completed, (\d) removed, (\d) idle,'
                            r' (\d) running, (\d) held, (\d) suspended')
 def parse_condor_msg(msg):
-    result = re.search(parse_condor_msg, msg)
+    result = re.search(re_condor_msg, msg)
     if result is None:
         raise RuntimeError(f'message not understood: {msg}')
     return result.groups()
 
 # Migrate a job from olddir to newdir for presidency.
 def migrate(root_name, log_names):
-    os.rename(os.path.join(root_dir, root_name), os.path.join(root_dir_new, root_name))
-    os.rename(os.path.join(log_dir, log_name), os.path.join(log_dir_new, log_name))
+    shutil.move(os.path.join(root_dir, root_name), os.path.join(root_dir_new, root_name))
+    for log_name in log_names:
+        shutil.move(os.path.join(log_dir, log_name), os.path.join(log_dir_new, log_name))
 
 # The main routine.
-for root_reg, root_name in root_names:
+for root_reg, root_name in root_names.items():
     print(f'found: {root_name}')
 
     # First, make sure that the three names all exist.
