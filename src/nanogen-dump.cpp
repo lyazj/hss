@@ -51,7 +51,7 @@ int main()
       cerr << rootfile << ": " << "file opening failed" << endl;
       continue;
     }
-    auto tree = file->Get<TTree>(tree_name);
+    auto tree = (TTree *)file->Get(tree_name);
     if(tree == NULL) {
       cerr << rootfile << ": " << tree_name << ": object not found" << endl;
       continue;
