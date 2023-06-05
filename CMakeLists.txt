@@ -73,7 +73,7 @@ add_compile_definitions(_GNU_SOURCE)
 
 # 可选：CMSSW 环境
 if(CMSSW_RLSE)
-    include_directories(/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/${CMSSW_RLSE}/src/slc7_amd64_gcc700)
+    include_directories(/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/${CMSSW_RLSE}/src)
     link_directories(/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/${CMSSW_RLSE}/lib/slc7_amd64_gcc700)
     if(NOT FWLITE_LIBRARIES)
         set(FWLITE_LIBRARIES FWCoreFWLite DataFormatsFWLite)
