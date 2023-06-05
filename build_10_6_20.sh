@@ -6,6 +6,8 @@ set -e
 mkdir -p build
 cd build
 
+source /cvmfs/cms.cern.ch/cmsset_default.sh
+
 [ -r ${CMSSW_RLSE}/src ] || scram p CMSSW ${CMSSW_RLSE}
 pushd ${CMSSW_RLSE}/src
 eval `scram runtime -sh`
