@@ -1,3 +1,4 @@
+#include "../cmssw/FWCore/FWLite/interface/FWLiteEnabler.h"
 #include <TFile.h>
 #include <TTree.h>
 #include <TList.h>
@@ -12,6 +13,9 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
+  // Enable FWLite.
+  FWLiteEnabler::enable();
+
   // Validate argument number.
   if(argc <= 2) {
     cerr << "usage: " << program_invocation_short_name

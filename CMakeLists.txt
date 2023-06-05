@@ -71,6 +71,10 @@ endif()
 add_compile_options(-Wall -Wshadow -Wextra)
 add_compile_definitions(_GNU_SOURCE)
 
+if(CMSSW_RLSE)
+    link_directories(/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/${CMSSW_RLSE}/lib/slc7_amd64_gcc700)
+endif()
+
 # 编译环境检查
 set(CODE_TO_COMPILE "#include <string>\\nusing std::operator\"\"s;\\n")
 set(TEMP_OUTPUT "/tmp/trail_$$.o")
@@ -105,4 +109,4 @@ add_executable(nanogen-dump src/nanogen-dump.cpp)
 target_link_libraries(nanogen-dump adhep ROOT::Tree)
 
 add_executable(merge-tree src/merge-tree.cpp)
-target_link_libraries(merge-tree adhep ROOT::Tree)
+target_link_libraries(merge-tree FWCoreFWLite DataFormatsFWLite ROOT::Tree)
