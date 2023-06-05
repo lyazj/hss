@@ -71,8 +71,14 @@ endif()
 add_compile_options(-Wall -Wshadow -Wextra)
 add_compile_definitions(_GNU_SOURCE)
 
+# 可选：CMSSW 环境
 if(CMSSW_RLSE)
+    include_directories(/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/${CMSSW_RLSE}/src/slc7_amd64_gcc700)
     link_directories(/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/${CMSSW_RLSE}/lib/slc7_amd64_gcc700)
+    if(NOT FWLITE_LIBRARIES)
+        set(FWLITE_LIBRARIES FWCoreFWLite DataFormatsFWLite)
+    endif()
+    add_compile_definitions(CMSSW_RLSE=${CMSSW_RLSE})
 endif()
 
 # 编译环境检查
@@ -109,4 +115,4 @@ add_executable(nanogen-dump src/nanogen-dump.cpp)
 target_link_libraries(nanogen-dump adhep ROOT::Tree)
 
 add_executable(merge-tree src/merge-tree.cpp)
-target_link_libraries(merge-tree FWCoreFWLite DataFormatsFWLite ROOT::Tree)
+target_link_libraries(merge-tree ${FWLITE_LIBRARIES} ROOT::Tree)

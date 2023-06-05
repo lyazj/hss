@@ -1,4 +1,7 @@
-#include "../cmssw/FWCore/FWLite/interface/FWLiteEnabler.h"
+#ifdef CMSSW_RLSE
+#include <FWCore/FWLite/interface/FWLiteEnabler.h>
+#endif  /* CMSSW_RLSE */
+
 #include <TFile.h>
 #include <TTree.h>
 #include <TList.h>
@@ -13,8 +16,10 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
+#ifdef CMSSW_RLSE
   // Enable FWLite.
   FWLiteEnabler::enable();
+#endif  /* CMSSW_RLSE */
 
   // Validate argument number.
   if(argc <= 2) {
