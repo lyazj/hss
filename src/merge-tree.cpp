@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
   // Merge trees and write new trees to destination file.
   vector<pair<string, TTree *>> dsttrees;
   for(const auto &[srcname, srclist] : srclists) {
-    cout << "merging tree: " << srcname << endl;
+    clog << "merging tree: " << srcname << endl;
     dsttrees.emplace_back(srcname, TTree::MergeTrees(srclist.get()));
   }
   sort(dsttrees.begin(), dsttrees.end());
