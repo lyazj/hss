@@ -43,6 +43,7 @@ int main(int argc, char *argv[])
       continue;
     }
     srcfiles.push_back(srcfile);
+    clog << "adding file: " << srcpath << endl;
 
     // Iteratively fetch TTree objects from source file.
     TList *srckeys = srcfile->GetListOfKeys();
@@ -55,6 +56,7 @@ int main(int argc, char *argv[])
         delete srcobj;
         continue;
       }
+      clog << "adding tree: " << srcname << endl;
       auto &srclist = srclists[srcname];
       if(srclist == NULL) {
         srclist.reset(new TList);
@@ -74,6 +76,7 @@ int main(int argc, char *argv[])
   // Merge trees and write new trees to destination file.
   vector<pair<string, TTree *>> dsttrees;
   for(const auto &[srcname, srclist] : srclists) {
+    cout << "merging tree: " << srcname << endl;
     dsttrees.emplace_back(srcname, TTree::MergeTrees(srclist.get()));
   }
   sort(dsttrees.begin(), dsttrees.end());
