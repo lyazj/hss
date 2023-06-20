@@ -31,10 +31,16 @@ register_branch("GenJet_eta"_pack, "Float"_type);
 register_branch("GenJet_phi"_pack, "Float"_type);
 register_branch("GenJet_mass"_pack, "Float"_type);
 
-int main()
+int main(int argc, char *argv[])
 {
+  if(argc != 2) {
+    cerr << "usage: " << get_invoc_short_name()
+         << " <dir-for-root-files>" << endl;
+    return 1;
+  }
+
   // fetch rootfile list
-  const char *nanogen_dir = "nanogen";
+  const char *nanogen_dir = argv[1];
   ADListDir lsdir(nanogen_dir, ADListDir::DT_REG);
   lsdir.sort_by_numbers();
   vector<string> rootfiles = lsdir.get_full_names();
