@@ -19,7 +19,7 @@ private:
   double beta;
 
   // Input data.
-  TLorentzVector *p4;
+  const TLorentzVector *p4;
   int np4;
   double pt_jet;
 
@@ -28,7 +28,7 @@ private:
   double *DeltaR;
 
 public:
-  ECFCalculator(int q, int N, double beta, TLorentzVector *p4, int np4, double pt_jet);
+  ECFCalculator(int q, int N, double beta, const TLorentzVector *p4, int np4, double pt_jet);
   ~ECFCalculator();
   double calculate() const;
   double calculate_recursion(int i, double pt_ratio) const;
@@ -36,7 +36,7 @@ public:
 };
 
 ECFCalculator::ECFCalculator(int q_in, int N_in, double beta_in,
-    TLorentzVector *p4_in, int np4_in, double pt_jet_in)
+    const TLorentzVector *p4_in, int np4_in, double pt_jet_in)
     : q(q_in), N(N_in), beta(beta_in), p4(p4_in), np4(np4_in), pt_jet(pt_jet_in)
 {
   // Allocate buffers.
@@ -112,7 +112,7 @@ void ecf_invalid_argument(const char *name)
 
 }  // namespace
 
-double ecf(int q, int N, double beta, TLorentzVector *p4, int np4, double pt_jet)
+double ecf(int q, int N, double beta, const TLorentzVector *p4, int np4, double pt_jet)
 {
   // Perform argument validation.
   if(N <= 0 || N > np4) ecf_invalid_argument("N");
@@ -122,14 +122,14 @@ double ecf(int q, int N, double beta, TLorentzVector *p4, int np4, double pt_jet
   return ECFCalculator(q, N, beta, p4, np4, pt_jet).calculate();
 }
 
-double N2(double beta, TLorentzVector *p4, int np4, double pt_jet)
+double N2(double beta, const TLorentzVector *p4, int np4, double pt_jet)
 {
   double e_2_3_beta = ecf(2, 3, beta, p4, np4, pt_jet);
   double e_1_2_beta = ecf(1, 2, beta, p4, np4, pt_jet);
   return e_2_3_beta / (e_1_2_beta * e_1_2_beta);
 }
 
-double N3(double beta, TLorentzVector *p4, int np4, double pt_jet)
+double N3(double beta, const TLorentzVector *p4, int np4, double pt_jet)
 {
   double e_2_4_beta = ecf(2, 4, beta, p4, np4, pt_jet);
   double e_1_3_beta = ecf(1, 3, beta, p4, np4, pt_jet);
