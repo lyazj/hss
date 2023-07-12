@@ -118,3 +118,7 @@ target_link_libraries(nanogen-dump adhep ROOT::Tree)
 
 add_executable(merge-tree src/merge-tree.cpp)
 target_link_libraries(merge-tree ${FWLITE_LIBRARIES} ROOT::Tree)
+
+add_executable(ecf-test src/ecf-test.cpp src/hep/ecf.cpp)
+target_link_libraries(ecf-test ROOT::Physics)
+target_compile_definitions(ecf-test PUBLIC ECF_DEBUG)

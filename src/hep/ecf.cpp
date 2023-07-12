@@ -3,6 +3,9 @@
 #include <string>
 #include <stdexcept>
 #include <algorithm>
+#include <cmath>
+#include <iostream>
+#include <iomanip>
 
 using namespace std;
 
@@ -69,7 +72,7 @@ double ECFCalculator::calculate_recursion(int i, double pt_ratio) const
   // Recursion.
   double r = 0.0;
   int k = i == 0 ? 0 : index[i - 1] + 1;
-  for(; k <= (np4 - (N - i)); ++k) {
+  for(; k <= np4 - N + i; ++k) {
     index[i] = k;
     r += calculate_recursion(i + 1, pt_ratio * (p4[k].Pt() / pt_jet));
   }
@@ -89,7 +92,16 @@ double ECFCalculator::calculate_min_deltar_multiplication() const
   // Multiplicate q minimal values.
   sort(DeltaR, DeltaR + N * (N - 1) / 2);
   double r = 1.0;
-  for(int i = 0; i < q; ++i) r *= DeltaR[i];
+  for(int i = 0; i < q; ++i) r *= pow(DeltaR[i], beta);
+
+#ifdef ECF_DEBUG
+  clog << "ECF candidate:";
+  for(int j = 0; j < N; ++j) clog << " " << index[j];
+  clog << ":";
+  for(int i = 0; i < N * (N - 1) / 2; ++i) clog << " " << fixed << setprecision(3) << DeltaR[i];
+  clog << ": " << r << endl;
+#endif  /* ECF_DEBUG */
+
   return r;
 }
 
