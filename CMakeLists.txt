@@ -105,6 +105,8 @@ add_subdirectory(${AD_PART_DIR})
 
 file(GLOB CMS_SOURCES src/cms/*.cpp)
 add_library(cms ${CMS_SOURCES})
+file(GLOB CMS_SOURCES src/hep/*.cpp)
+add_library(hep ${CMS_SOURCES})
 
 # 以下为可执行文件构建
 
