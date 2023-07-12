@@ -121,3 +121,17 @@ double ecf(int q, int N, double beta, TLorentzVector *p4, int np4, double pt_jet
 
   return ECFCalculator(q, N, beta, p4, np4, pt_jet).calculate();
 }
+
+double N2(double beta, TLorentzVector *p4, int np4, double pt_jet)
+{
+  double e_2_3_beta = ecf(2, 3, beta, p4, np4, pt_jet);
+  double e_1_2_beta = ecf(1, 2, beta, p4, np4, pt_jet);
+  return e_2_3_beta / (e_1_2_beta * e_1_2_beta);
+}
+
+double N3(double beta, TLorentzVector *p4, int np4, double pt_jet)
+{
+  double e_2_4_beta = ecf(2, 4, beta, p4, np4, pt_jet);
+  double e_1_3_beta = ecf(1, 3, beta, p4, np4, pt_jet);
+  return e_2_4_beta / (e_1_3_beta * e_1_3_beta);
+}
