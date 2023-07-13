@@ -44,7 +44,7 @@ include_directories(${AD_PART_INC_DIR})
 link_directories(${AD_PART_LIB_DIR})
 
 # 优化、调试和通用编译选项
-option(ENABLE_SANITIZER "compile and link with sanitizing flags" ON)
+option(ENABLE_SANITIZER "compile and link with sanitizing flags" OFF)
 option(ENABLE_GPROF "compile and link with gprof flags" OFF)
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE DEBUG)
