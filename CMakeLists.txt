@@ -105,8 +105,6 @@ add_subdirectory(${AD_PART_DIR})
 
 file(GLOB CMS_SOURCES src/cms/*.cpp)
 add_library(cms ${CMS_SOURCES})
-file(GLOB CMS_SOURCES src/hep/*.cpp)
-add_library(hep ${CMS_SOURCES})
 
 # 以下为可执行文件构建
 
@@ -118,7 +116,3 @@ target_link_libraries(nanogen-dump adhep ROOT::Tree)
 
 add_executable(merge-tree src/merge-tree.cpp)
 target_link_libraries(merge-tree ${FWLITE_LIBRARIES} ROOT::Tree)
-
-add_executable(ecf-test src/ecf-test.cpp src/hep/ecf.cpp)
-target_link_libraries(ecf-test ROOT::Physics)
-target_compile_definitions(ecf-test PUBLIC ECF_DEBUG)
