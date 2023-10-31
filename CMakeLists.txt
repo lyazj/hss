@@ -116,3 +116,6 @@ target_link_libraries(nanogen-dump adhep ROOT::Tree)
 
 add_executable(merge-tree src/merge-tree.cpp)
 target_link_libraries(merge-tree ${FWLITE_LIBRARIES} ROOT::Tree)
+
+add_executable(nanoaod-plot src/nanoaod-plot.cpp)
+target_link_libraries(nanoaod-plot adhep cms ROOT::Tree ROOT::Gpad ASImage)
