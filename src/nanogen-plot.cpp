@@ -136,7 +136,6 @@ int main(int argc, char *argv[])
 
   // draw Higgs mass
   if(!ADStat("higgs_mass.pdf")) {
-    gPad->SetLogy(1);
     canvas->SetLeftMargin(0.12);
     // chain->Draw("GenPart_mass", "GenPart_pdgId == 25");
     chain->Draw("GenPart_mass", "GenPart_pdgId == 25 && GenPart_mass >= 100 && GenPart_mass <= 150");
@@ -156,7 +155,6 @@ int main(int argc, char *argv[])
     // higgs_mass->GetYaxis()->SetRangeUser(..., ...);
     CMS_lumi(canvas.get(), iPeriod, iPos);
     canvas->SaveAs("higgs_mass.pdf");
-    gPad->SetLogy(0);
   }
 
   // draw leading jet pt
@@ -228,9 +226,10 @@ int main(int argc, char *argv[])
 
   // draw leading jet mass
   if(!ADStat("ldjet_mass.pdf")) {
+    gPad->SetLogy(1);
     canvas->SetLeftMargin(0.15);
     // chain->Draw("GenJet_mass", "GenJet_pt == Max$(GenJet_pt)");
-    chain->Draw("GenJet_mass", "GenJet_pt == Max$(GenJet_pt) && GenJet_mass < 100");
+    chain->Draw("GenJet_mass", "GenJet_pt == Max$(GenJet_pt) && GenJet_mass < 135");
     auto ldjet_mass = (TH1F *)gPad->GetPrimitive("htemp");
     ldjet_mass->SetName("ldjet_mass");
     ldjet_mass->SetStats(0);
@@ -247,6 +246,7 @@ int main(int argc, char *argv[])
     // ldjet_mass->GetYaxis()->SetRangeUser(..., ...);
     CMS_lumi(canvas.get(), iPeriod, iPos);
     canvas->SaveAs("ldjet_mass.pdf");
+    gPad->SetLogy(0);
   }
 
   // goodbye
