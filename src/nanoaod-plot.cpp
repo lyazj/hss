@@ -39,7 +39,8 @@ static void draw(TCanvas *canvas, TTree *tree, const string &name)
     htemp->GetXaxis()->SetTitleSize(0.05);
     htemp->GetXaxis()->SetTitleOffset(1.1);
     htemp->GetYaxis()->SetTitleSize(0.05);
-    htemp->GetYaxis()->SetTitleOffset(1.5);
+    htemp->GetYaxis()->SetTitleOffset(1.0);
+    if(name.find("prob") != name.npos) htemp->SetBins(100, 0.0, 1.0);
     CMS_lumi(canvas, iPeriod, iPos);
     canvas->SaveAs(filename.c_str());
   }
