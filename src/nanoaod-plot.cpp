@@ -12,7 +12,8 @@
 
 using namespace std;
 
-static void draw(TCanvas *canvas, TTree *tree, const string &name)
+static void draw(TCanvas *canvas, TTree *tree, const string &name,
+    string xtitle = "", string filename = "")
 {
   int iPeriod = 0;  // 1=7TeV, 2=8TeV, 3=7+8TeV, 7=7+8+13TeV, 0=free form (uses lumi_sqrtS)
   // iPos drives the position of the CMS logo in the plot
@@ -23,8 +24,8 @@ static void draw(TCanvas *canvas, TTree *tree, const string &name)
   //   iPos = 10*(alignement 1/2/3) + position (1/2/3 = left/center/right)
   int iPos = 33;
 
-  // draw tagging score of hbb
-  string filename = name + ".pdf";
+  if(xtitle.empty()) xtitle = name;
+  if(filename.empty()) filename = name + ".pdf";
   if(!ADStat(filename.c_str())) {
     canvas->SetLeftMargin(0.1);
     tree->Draw(name.c_str());
@@ -34,7 +35,7 @@ static void draw(TCanvas *canvas, TTree *tree, const string &name)
     htemp->SetLineColor(kBlack);
     htemp->SetLineWidth(2);
     htemp->SetMarkerSize(1);
-    htemp->SetXTitle(name.c_str());
+    htemp->SetXTitle(xtitle.c_str());
     htemp->SetYTitle("number");
     htemp->GetXaxis()->SetTitleSize(0.05);
     htemp->GetXaxis()->SetTitleOffset(1.1);
@@ -94,26 +95,35 @@ int main(int argc, char *argv[])
   }
 
   // draw tagging scores
-  draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHbb");
-  draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHbc");
-  draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHbs");
-  draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHcc");
-  draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHcs");
-  draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHee");
-  draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHgg");
-  draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHmm");
-  draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHqq");
-  draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHss");
-  draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHtauhtaue");
-  draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHtauhtauh");
-  draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHtauhtaum");
-  draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probQCDb");
-  draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probQCDbb");
-  draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probQCDc");
-  draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probQCDcc");
-  draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probQCDothers");
-  draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_resonanceMassCorr");
-  draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_visiableMassCorr");
+  //draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHbb");
+  //draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHbc");
+  //draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHbs");
+  //draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHcc");
+  //draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHcs");
+  //draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHee");
+  //draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHgg");
+  //draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHmm");
+  //draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHqq");
+  //draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHss");
+  //draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHtauhtaue");
+  //draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHtauhtauh");
+  //draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHtauhtaum");
+  //draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probQCDb");
+  //draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probQCDbb");
+  //draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probQCDc");
+  //draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probQCDcc");
+  //draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probQCDothers");
+  //draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_resonanceMassCorr");
+  //draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_visiableMassCorr");
+  draw(canvas.get(), chain.get(), "1 / (1 + ("
+      "AK15Puppi_inclParTMDV2_probHcc + AK15Puppi_inclParTMDV2_probHss"
+      ") / AK15Puppi_inclParTMDV2_probHbb)", "Hbb / (Hbb + Hcc + Hss)", "prob_bb_bbccss.pdf");
+  draw(canvas.get(), chain.get(), "1 / (1 + ("
+      "AK15Puppi_inclParTMDV2_probHbb + AK15Puppi_inclParTMDV2_probHss"
+      ") / AK15Puppi_inclParTMDV2_probHcc)", "Hcc / (Hbb + Hcc + Hss)", "prob_cc_bbccss.pdf");
+  draw(canvas.get(), chain.get(), "1 / (1 + ("
+      "AK15Puppi_inclParTMDV2_probHbb + AK15Puppi_inclParTMDV2_probHcc"
+      ") / AK15Puppi_inclParTMDV2_probHss)", "Hss / (Hbb + Hcc + Hss)", "prob_ss_bbccss.pdf");
 
   // goodbye
   return 0;
