@@ -22,12 +22,11 @@ static void draw(TCanvas *canvas, TTree *tree, const string &name,
   // iPos=22 : center, centered
   // mode generally :
   //   iPos = 10*(alignement 1/2/3) + position (1/2/3 = left/center/right)
-  int iPos = 33;
+  int iPos = 11;
 
   if(xtitle.empty()) xtitle = name;
   if(filename.empty()) filename = name + ".pdf";
   if(!ADStat(filename.c_str())) {
-    canvas->SetLeftMargin(0.1);
     tree->Draw(name.c_str());
     auto htemp = (TH1F *)gPad->GetPrimitive("htemp");
     htemp->SetName(name.c_str());
@@ -40,7 +39,7 @@ static void draw(TCanvas *canvas, TTree *tree, const string &name,
     htemp->GetXaxis()->SetTitleSize(0.05);
     htemp->GetXaxis()->SetTitleOffset(1.1);
     htemp->GetYaxis()->SetTitleSize(0.05);
-    htemp->GetYaxis()->SetTitleOffset(1.0);
+    htemp->GetYaxis()->SetTitleOffset(1.5);
     if(name.find("prob") != name.npos) htemp->SetBins(100, 0.0, 1.0);
     CMS_lumi(canvas, iPeriod, iPos);
     canvas->SaveAs(filename.c_str());
@@ -74,7 +73,7 @@ int main(int argc, char *argv[])
   canvas->SetBorderMode(0);
   canvas->SetFrameFillStyle(0);
   canvas->SetFrameBorderMode(0);
-  canvas->SetLeftMargin(0.12);
+  canvas->SetLeftMargin(0.15);
   canvas->SetRightMargin(0.04);
   canvas->SetTopMargin(0.08);
   canvas->SetBottomMargin(0.12);
