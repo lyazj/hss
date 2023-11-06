@@ -1,17 +1,25 @@
 #include <hss/resource.h>
 #include <iostream>
+#include <stdlib.h>
 #include <unistd.h>
+#include <err.h>
 
 using namespace std;
 
 int main(int argc, char *argv[])
 {
-  if(argc != 2) {
-    cerr << "usage: " << program_invocation_short_name << " <pid>" << endl;
+  if(argc < 2) {
+    cerr << "usage: " << program_invocation_short_name << " <program> [ <args> ]" << endl;
     return 1;
   }
 
-  ResourceManager rman(stoi(argv[1]));
+  pid_t pid = fork();
+  if(pid == 0) {
+    execvp(argv[1], &argv[1]);
+    err(EXIT_FAILURE, "execvp: %s", argv[1]);
+  }
+
+  ResourceManager rman(pid);
   for(unsigned long t = 0;; ++t) {
     vector<pair<int, string>> opened_files;
     try {
