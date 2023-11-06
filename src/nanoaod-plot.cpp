@@ -141,24 +141,6 @@ int main(int argc, char *argv[])
       " + AK15Puppi_inclParTMDV2_probQCDc + AK15Puppi_inclParTMDV2_probQCDcc"
       " + AK15Puppi_inclParTMDV2_probQCDothers"
       ") / AK15Puppi_inclParTMDV2_probHss)", "Hss / (Hbb + Hcc + Hss + QCD)", "prob_ss_bbccssqcd.pdf");
-  draw(canvas.get(), chain.get(), "1 / (1 + ("
-      "AK15Puppi_inclParTMDV2_probHcc + AK15Puppi_inclParTMDV2_probHss"
-      ") / AK15Puppi_inclParTMDV2_probHbb)", "Hbb / (Hbb + Hcc + Hss)", "prob_bb_bbccsscut.pdf",
-      "1 / (1 + ("
-      "AK15Puppi_inclParTMDV2_probHcc + AK15Puppi_inclParTMDV2_probHss"
-      ") / AK15Puppi_inclParTMDV2_probHbb) > 0.8");
-  draw(canvas.get(), chain.get(), "1 / (1 + ("
-      "AK15Puppi_inclParTMDV2_probHbb + AK15Puppi_inclParTMDV2_probHss"
-      ") / AK15Puppi_inclParTMDV2_probHcc)", "Hcc / (Hbb + Hcc + Hss)", "prob_cc_bbccsscut.pdf",
-      "1 / (1 + ("
-      "AK15Puppi_inclParTMDV2_probHbb + AK15Puppi_inclParTMDV2_probHss"
-      ") / AK15Puppi_inclParTMDV2_probHcc) > 0.8");
-  draw(canvas.get(), chain.get(), "1 / (1 + ("
-      "AK15Puppi_inclParTMDV2_probHbb + AK15Puppi_inclParTMDV2_probHcc"
-      ") / AK15Puppi_inclParTMDV2_probHss)", "Hss / (Hbb + Hcc + Hss)", "prob_ss_bbccsscut.pdf",
-      "1 / (1 + ("
-      "AK15Puppi_inclParTMDV2_probHbb + AK15Puppi_inclParTMDV2_probHcc"
-      ") / AK15Puppi_inclParTMDV2_probHss) > 0.8");
 
   // goodbye
   return 0;
