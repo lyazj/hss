@@ -10,31 +10,11 @@
 #include <memory>
 #include <iostream>
 #include <iomanip>
-#include <signal.h>
 
 using namespace std;
 
-static void report_opened_root_files()
-{
-  static unsigned long c;
-  static ResourceManager rman;
-  for(auto &[fd, path] : rman.list_opened_files()) {
-    if(path.rfind(".root") != path.npos) {
-      clog << "[" << c << "] " << path << endl;
-    }
-  }
-  ++c;
-}
-
-static void __attribute__((constructor)) repeat_report_opened_root_files()
-{
-  report_opened_root_files();
-  signal(SIGALRM, (sighandler_t)repeat_report_opened_root_files);
-  alarm(1);
-}
-
 static void draw(TCanvas *canvas, TTree *tree, const string &name,
-    string xtitle = "", string filename = "")
+    string xtitle = "", string filename = "", string selection = "")
 {
   int iPeriod = 0;  // 1=7TeV, 2=8TeV, 3=7+8TeV, 7=7+8+13TeV, 0=free form (uses lumi_sqrtS)
   // iPos drives the position of the CMS logo in the plot
@@ -48,7 +28,7 @@ static void draw(TCanvas *canvas, TTree *tree, const string &name,
   if(xtitle.empty()) xtitle = name;
   if(filename.empty()) filename = name + ".pdf";
   if(!ADStat(filename.c_str())) {
-    tree->Draw(name.c_str());
+    tree->Draw(name.c_str(), selection.c_str());
     auto htemp = (TH1F *)gPad->GetPrimitive("htemp");
     htemp->SetName(name.c_str());
     htemp->SetStats(0);
@@ -61,7 +41,6 @@ static void draw(TCanvas *canvas, TTree *tree, const string &name,
     htemp->GetXaxis()->SetTitleOffset(1.1);
     htemp->GetYaxis()->SetTitleSize(0.05);
     htemp->GetYaxis()->SetTitleOffset(1.5);
-    if(name.find("prob") != name.npos) htemp->SetBins(100, 0.0, 1.0);
     CMS_lumi(canvas, iPeriod, iPos);
     canvas->SaveAs(filename.c_str());
   }
@@ -162,6 +141,24 @@ int main(int argc, char *argv[])
       " + AK15Puppi_inclParTMDV2_probQCDc + AK15Puppi_inclParTMDV2_probQCDcc"
       " + AK15Puppi_inclParTMDV2_probQCDothers"
       ") / AK15Puppi_inclParTMDV2_probHss)", "Hss / (Hbb + Hcc + Hss + QCD)", "prob_ss_bbccssqcd.pdf");
+  draw(canvas.get(), chain.get(), "1 / (1 + ("
+      "AK15Puppi_inclParTMDV2_probHcc + AK15Puppi_inclParTMDV2_probHss"
+      ") / AK15Puppi_inclParTMDV2_probHbb)", "Hbb / (Hbb + Hcc + Hss)", "prob_bb_bbccsscut.pdf",
+      "1 / (1 + ("
+      "AK15Puppi_inclParTMDV2_probHcc + AK15Puppi_inclParTMDV2_probHss"
+      ") / AK15Puppi_inclParTMDV2_probHbb) > 0.8");
+  draw(canvas.get(), chain.get(), "1 / (1 + ("
+      "AK15Puppi_inclParTMDV2_probHbb + AK15Puppi_inclParTMDV2_probHss"
+      ") / AK15Puppi_inclParTMDV2_probHcc)", "Hcc / (Hbb + Hcc + Hss)", "prob_cc_bbccsscut.pdf",
+      "1 / (1 + ("
+      "AK15Puppi_inclParTMDV2_probHbb + AK15Puppi_inclParTMDV2_probHss"
+      ") / AK15Puppi_inclParTMDV2_probHcc) > 0.8");
+  draw(canvas.get(), chain.get(), "1 / (1 + ("
+      "AK15Puppi_inclParTMDV2_probHbb + AK15Puppi_inclParTMDV2_probHcc"
+      ") / AK15Puppi_inclParTMDV2_probHss)", "Hss / (Hbb + Hcc + Hss)", "prob_ss_bbccsscut.pdf",
+      "1 / (1 + ("
+      "AK15Puppi_inclParTMDV2_probHbb + AK15Puppi_inclParTMDV2_probHcc"
+      ") / AK15Puppi_inclParTMDV2_probHss) > 0.8");
 
   // goodbye
   return 0;

@@ -6,7 +6,7 @@
 
 class ResourceManager {
 public:
-  ResourceManager();
+  ResourceManager(pid_t pid = 0);
   ResourceManager(const ResourceManager &) = delete;
   ~ResourceManager();
 
@@ -15,5 +15,4 @@ public:
 private:
   pid_t pid;
   int proc_fd;
-  int proc_fd_fd;
 };
