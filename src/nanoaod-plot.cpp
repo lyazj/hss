@@ -123,6 +123,24 @@ int main(int argc, char *argv[])
   draw(canvas.get(), chain.get(), "1 / (1 + ("
       "AK15Puppi_inclParTMDV2_probHbb + AK15Puppi_inclParTMDV2_probHcc"
       ") / AK15Puppi_inclParTMDV2_probHss)", "Hss / (Hbb + Hcc + Hss)", "prob_ss_bbccss.pdf");
+  draw(canvas.get(), chain.get(), "1 / (1 + ("
+      "AK15Puppi_inclParTMDV2_probHcc + AK15Puppi_inclParTMDV2_probHss"
+      " + AK15Puppi_inclParTMDV2_probQCDb + AK15Puppi_inclParTMDV2_probQCDbb"
+      " + AK15Puppi_inclParTMDV2_probQCDc + AK15Puppi_inclParTMDV2_probQCDcc"
+      " + AK15Puppi_inclParTMDV2_probQCDothers"
+      ") / AK15Puppi_inclParTMDV2_probHbb)", "Hbb / (Hbb + Hcc + Hss + QCD)", "prob_bb_bbccssqcd.pdf");
+  draw(canvas.get(), chain.get(), "1 / (1 + ("
+      "AK15Puppi_inclParTMDV2_probHbb + AK15Puppi_inclParTMDV2_probHss"
+      " + AK15Puppi_inclParTMDV2_probQCDb + AK15Puppi_inclParTMDV2_probQCDbb"
+      " + AK15Puppi_inclParTMDV2_probQCDc + AK15Puppi_inclParTMDV2_probQCDcc"
+      " + AK15Puppi_inclParTMDV2_probQCDothers"
+      ") / AK15Puppi_inclParTMDV2_probHcc)", "Hcc / (Hbb + Hcc + Hss + QCD)", "prob_cc_bbccssqcd.pdf");
+  draw(canvas.get(), chain.get(), "1 / (1 + ("
+      "AK15Puppi_inclParTMDV2_probHbb + AK15Puppi_inclParTMDV2_probHcc"
+      " + AK15Puppi_inclParTMDV2_probQCDb + AK15Puppi_inclParTMDV2_probQCDbb"
+      " + AK15Puppi_inclParTMDV2_probQCDc + AK15Puppi_inclParTMDV2_probQCDcc"
+      " + AK15Puppi_inclParTMDV2_probQCDothers"
+      ") / AK15Puppi_inclParTMDV2_probHss)", "Hss / (Hbb + Hcc + Hss + QCD)", "prob_ss_bbccssqcd.pdf");
 
   // goodbye
   return 0;
