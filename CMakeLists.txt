@@ -105,6 +105,8 @@ add_subdirectory(${AD_PART_DIR})
 
 file(GLOB CMS_SOURCES src/cms/*.cpp)
 add_library(cms ${CMS_SOURCES})
+file(GLOB HSS_SOURCES src/hss/*.cpp)
+add_library(hss ${HSS_SOURCES})
 
 # 以下为可执行文件构建
 
@@ -118,4 +120,4 @@ add_executable(merge-tree src/merge-tree.cpp)
 target_link_libraries(merge-tree ${FWLITE_LIBRARIES} ROOT::Tree)
 
 add_executable(nanoaod-plot src/nanoaod-plot.cpp)
-target_link_libraries(nanoaod-plot adhep cms ROOT::Tree ROOT::Gpad ASImage)
+target_link_libraries(nanoaod-plot hss adhep cms ROOT::Tree ROOT::Gpad ASImage)

@@ -2,6 +2,7 @@
 #include "adfs.h"
 #include "cms/tdrstyle.h"
 #include "cms/CMS_lumi.h"
+#include "hss/resource.h"
 #include <TChain.h>
 #include <TCanvas.h>
 #include <TPad.h>
@@ -9,8 +10,28 @@
 #include <memory>
 #include <iostream>
 #include <iomanip>
+#include <signal.h>
 
 using namespace std;
+
+static void report_opened_root_files()
+{
+  static unsigned long c;
+  static ResourceManager rman;
+  for(auto &[fd, path] : rman.list_opened_files()) {
+    if(path.rfind(".root") != path.npos) {
+      clog << "[" << c << "] " << path << endl;
+    }
+  }
+  ++c;
+}
+
+static void __attribute__((constructor)) repeat_report_opened_root_files()
+{
+  report_opened_root_files();
+  signal(SIGALRM, (sighandler_t)repeat_report_opened_root_files);
+  alarm(1);
+}
 
 static void draw(TCanvas *canvas, TTree *tree, const string &name,
     string xtitle = "", string filename = "")
