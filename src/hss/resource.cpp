@@ -1,4 +1,5 @@
 #include "hss/resource.h"
+#include <limits.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <errno.h>
@@ -38,7 +39,7 @@ vector<pair<int, string>> ResourceManager::list_opened_files() const
   }
 
   // Read directory "/proc/<pid>/fd".
-  char real_name[FILENAME_MAX];
+  char real_name[PATH_MAX];
   errno = 0;
   while(struct dirent *entry = readdir(proc_fd_dir)) {
     if(entry->d_type == DT_LNK) {  // Other types not supported.
