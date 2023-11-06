@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
 
   // fetch rootfile list
   const char *nanogen_dir = argv[1];
-  ADListDir lsdir(nanogen_dir, ADListDir::DT_REG);
+  ADListDir lsdir(nanogen_dir, ADListDir::DT_REG | ADListDir::DT_UNKNOWN);
   lsdir.sort_by_numbers();
   vector<string> rootfiles = lsdir.get_full_names();
   cout << "rootfiles:" << endl;

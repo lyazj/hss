@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
 
   // fetch rootfile list
   const char *nanogen_dir = argv[1];
-  ADListDir lsdir(nanogen_dir, ADListDir::DT_REG);
+  ADListDir lsdir(nanogen_dir, ADListDir::DT_REG | ADListDir::DT_UNKNOWN);
   lsdir.sort_by_numbers();
   vector<string> rootfiles = lsdir.get_full_names();
   cout << "rootfiles:" << endl;
@@ -94,26 +94,26 @@ int main(int argc, char *argv[])
   }
 
   // draw tagging scores
-  //draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHbb");
-  //draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHbc");
-  //draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHbs");
-  //draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHcc");
-  //draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHcs");
-  //draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHee");
-  //draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHgg");
-  //draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHmm");
-  //draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHqq");
-  //draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHss");
-  //draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHtauhtaue");
-  //draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHtauhtauh");
-  //draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHtauhtaum");
-  //draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probQCDb");
-  //draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probQCDbb");
-  //draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probQCDc");
-  //draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probQCDcc");
-  //draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probQCDothers");
-  //draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_resonanceMassCorr");
-  //draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_visiableMassCorr");
+  draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHbb");
+  draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHbc");
+  draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHbs");
+  draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHcc");
+  draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHcs");
+  draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHee");
+  draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHgg");
+  draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHmm");
+  draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHqq");
+  draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHss");
+  draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHtauhtaue");
+  draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHtauhtauh");
+  draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probHtauhtaum");
+  draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probQCDb");
+  draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probQCDbb");
+  draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probQCDc");
+  draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probQCDcc");
+  draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_probQCDothers");
+  draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_resonanceMassCorr");
+  draw(canvas.get(), chain.get(), "AK15Puppi_inclParTMDV2_visiableMassCorr");
   draw(canvas.get(), chain.get(), "1 / (1 + ("
       "AK15Puppi_inclParTMDV2_probHcc + AK15Puppi_inclParTMDV2_probHss"
       ") / AK15Puppi_inclParTMDV2_probHbb)", "Hbb / (Hbb + Hcc + Hss)", "prob_bb_bbccss.pdf");
