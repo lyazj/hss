@@ -121,3 +121,6 @@ target_link_libraries(merge-tree ${FWLITE_LIBRARIES} ROOT::Tree)
 
 add_executable(nanoaod-plot src/nanoaod-plot.cpp)
 target_link_libraries(nanoaod-plot adhep cms ROOT::Tree ROOT::Gpad ASImage)
+
+add_executable(trace-root src/trace-root.cpp)
+target_link_libraries(trace-root hss)
