@@ -1,5 +1,6 @@
 #include <hss/resource.h>
 #include <iostream>
+#include <unistd.h>
 
 using namespace std;
 
@@ -24,6 +25,7 @@ int main(int argc, char *argv[])
         cout << "[" << t << "] " << path << endl;
       }
     }
+    sleep(1);
   }
   return 0;
 }
