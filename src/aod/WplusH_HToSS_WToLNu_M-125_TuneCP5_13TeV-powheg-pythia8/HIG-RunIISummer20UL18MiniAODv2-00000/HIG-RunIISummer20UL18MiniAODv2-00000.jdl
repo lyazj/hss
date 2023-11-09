@@ -1,0 +1,27 @@
+# vim:ft=conf
+
+Universe = vanilla
+Executable = /afs/cern.ch/user/l/legao/hss/src/aod/WplusH_HToSS_WToLNu_M-125_TuneCP5_13TeV-powheg-pythia8/HIG-RunIISummer20UL18MiniAODv2-00000/x509run
+
++ProjectName="cms.org.cern"
+
+X509UP = x509up
+PROG = /afs/cern.ch/user/l/legao/hss/src/aod/WplusH_HToSS_WToLNu_M-125_TuneCP5_13TeV-powheg-pythia8/HIG-RunIISummer20UL18MiniAODv2-00000/HIG-RunIISummer20UL18MiniAODv2-00000.sh
+NEVENT = 10000
+NTHREAD = 8
+Arguments = $(X509UP) $(PROG) $(NEVENT) $(NTHREAD) $(SEED)
+
+requirements = (OpSysAndVer =?= "CentOS7")
+request_cpus = 8
+request_memory = 4096
+x509userproxy = $(X509UP)
+
++JobFlavour = "tomorrow"
+
+Log    = log/$(Cluster)_$(SEED).log
+Output = log/$(Cluster)_$(SEED)_1.log
+Error  = log/$(Cluster)_$(SEED)_2.log
+
+should_transfer_files = NO
+
+Queue SEED from HIG-RunIISummer20UL18MiniAODv2-00000.txt

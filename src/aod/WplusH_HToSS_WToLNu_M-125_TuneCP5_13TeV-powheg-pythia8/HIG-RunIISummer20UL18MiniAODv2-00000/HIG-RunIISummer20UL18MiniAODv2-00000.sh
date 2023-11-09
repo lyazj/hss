@@ -1,24 +1,23 @@
 #!/bin/bash
 # Modified by: <lyazj@github.com>
 
-if [ $# != 4 ] && [ $# != 5 ]; then
-    >&2 echo "usage: $(basename $0) <nevent> <nthread> <seed-begin> <seed-offset> [<x509up>]"
+if [ $# != 3 ]; then
+    >&2 echo "usage: $(basename $0) <nevent> <nthread> <seed>"
     exit 1
 fi
 NEVENT=$1
 NTHREAD=$2
-SEED=$[$3 + $4]
-if [ ! -z "$5" ]; then
-    export X509_USER_PROXY="$5"
-    if ! voms-proxy-info -file /tmp/x509up_u${UID}; then
-        cp "${X509_USER_PROXY}" /tmp/x509up_u${UID}
-    fi
-fi
+SEED=$3
 
 set -ev
-FRAGMENT_NAME=HIG-RunIISummer20UL18wmLHEGEN-02820
-FRAGMENT="$(readlink -f ${FRAGMENT_NAME})"  # absolute path
+FRAGMENT_NAME=HIG-RunIISummer20UL18wmLHEGEN-00000
+FRAGMENT=/afs/cern.ch/user/l/legao/hss/src/aod/WplusH_HToSS_WToLNu_M-125_TuneCP5_13TeV-powheg-pythia8/HIG-RunIISummer20UL18MiniAODv2-00000/HIG-RunIISummer20UL18wmLHEGEN-00000
+OUTDIR=/eos/home-l/legao/hss/samples/MiniAOD/WplusH_HToSS_WToLNu_M-125_TuneCP5_13TeV-powheg-pythia8/HIG-RunIISummer20UL18MiniAODv2-00000
+UUID="$(python3 -c "import uuid; print(uuid.uuid3(uuid.NAMESPACE_DNS, '${SEED}').__str__().upper())")"
+OUTFILE="${OUTDIR}/${UUID}.root"
+echo "Output file: ${OUTFILE}"
 
+! [ -e "${OUTFILE}" ]  # early stop on name collision
 voms-proxy-info  # early stop on proxy error
 source /cvmfs/cms.cern.ch/cmsset_default.sh
 
@@ -78,3 +77,6 @@ cmsDriver.py --python_filename HIG-RunIISummer20UL18RECO-02334.py --eventcontent
 # 5_HIG-RunIISummer20UL18MiniAODv2-02334.sh
 scram_setup slc7_amd64_gcc700 CMSSW_10_6_20
 cmsDriver.py --python_filename HIG-RunIISummer20UL18MiniAODv2-02334.py --eventcontent MINIAODSIM --customise Configuration/DataProcessing/Utils.addMonitoring --datatier MINIAODSIM --fileout file:HIG-RunIISummer20UL18MiniAODv2-02334.root --conditions 106X_upgrade2018_realistic_v16_L1v1 --step PAT --procModifiers run2_miniAOD_UL --geometry DB:Extended --filein file:HIG-RunIISummer20UL18RECO-02334.root --era Run2_2018 --runUnscheduled --mc -n ${NEVENT} --nThreads ${NTHREAD}
+
+# output
+rsync -v HIG-RunIISummer20UL18MiniAODv2-02334.root "${OUTFILE}"
