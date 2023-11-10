@@ -7,7 +7,7 @@ Executable = /afs/cern.ch/user/l/legao/hss/src/aod/WplusH_HToSS_WToLNu_M-125_Tun
 
 X509UP = x509up
 PROG = /afs/cern.ch/user/l/legao/hss/src/aod/WplusH_HToSS_WToLNu_M-125_TuneCP5_13TeV-powheg-pythia8/HIG-RunIISummer20UL18MiniAODv2-00000/HIG-RunIISummer20UL18MiniAODv2-00000.sh
-NEVENT = 10000
+NEVENT = 2000
 NTHREAD = 8
 Arguments = $(X509UP) $(PROG) $(NEVENT) $(NTHREAD) $(SEED)
 
