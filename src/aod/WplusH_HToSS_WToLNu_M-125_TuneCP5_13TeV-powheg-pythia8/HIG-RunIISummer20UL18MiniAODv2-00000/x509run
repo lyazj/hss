@@ -19,6 +19,6 @@ voms-proxy-info
 export HOME=/afs/cern.ch/user/l/legao
 
 # Turn to user-specified program.
-PROG="$2"
+PROG="$(readlink -f "$2")"
 shift 2
 exec "${PROG}" "$@"
