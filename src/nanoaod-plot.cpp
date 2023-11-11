@@ -2,7 +2,6 @@
 #include "adfs.h"
 #include "cms/tdrstyle.h"
 #include "cms/CMS_lumi.h"
-#include "hss/resource.h"
 #include <TChain.h>
 #include <TCanvas.h>
 #include <TPad.h>

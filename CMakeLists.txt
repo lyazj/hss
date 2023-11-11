@@ -124,3 +124,6 @@ target_link_libraries(nanoaod-plot adhep cms ROOT::Tree ROOT::Gpad ASImage)
 
 add_executable(trace-root src/trace-root.cpp)
 target_link_libraries(trace-root hss)
+
+add_executable(hist-add src/hist-add.cpp)
+target_link_libraries(hist-add adhep ROOT::Gpad)
