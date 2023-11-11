@@ -12,7 +12,7 @@ SEED=$3
 set -ev
 FRAGMENT_NAME=HIG-RunIISummer20UL18wmLHEGEN-00000
 FRAGMENT=/afs/cern.ch/user/l/legao/hss/src/aod/WplusH_HToSS_WToLNu_M-125_TuneCP5_13TeV-powheg-pythia8/HIG-RunIISummer20UL18MiniAODv2-00000/HIG-RunIISummer20UL18wmLHEGEN-00000
-OUTDIR=/eos/home-l/legao/hss/samples/TinyAOD/WplusH_HToSS_WToLNu_M-125_TuneCP5_13TeV-powheg-pythia8/HIG-RunIISummer20UL18MiniAODv2-00000
+OUTDIR=/eos/user/l/legao/hss/samples/TinyAOD/WplusH_HToSS_WToLNu_M-125_TuneCP5_13TeV-powheg-pythia8/HIG-RunIISummer20UL18MiniAODv2-00000
 UUID="$(python3 -c "import uuid; print(uuid.uuid3(uuid.NAMESPACE_DNS, '${SEED}').__str__().upper())")"
 OUTFILE="${OUTDIR}/${UUID}.root"
 LOGFILE="${OUTDIR}/${UUID}.log"
