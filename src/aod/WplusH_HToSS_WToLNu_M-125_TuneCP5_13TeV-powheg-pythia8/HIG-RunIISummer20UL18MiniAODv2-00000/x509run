@@ -14,6 +14,10 @@ export X509_USER_PROXY=/tmp/x509up_u$UID
 cp "$1" ${X509_USER_PROXY}
 voms-proxy-info
 
+# Set environment variable $HOME.
+# This is required by DAS and other libraries.
+export HOME=/afs/cern.ch/user/l/legao
+
 # Turn to user-specified program.
 PROG="$2"
 shift 2
