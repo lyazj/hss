@@ -9,11 +9,11 @@ X509UP = x509up
 PROG = HIG-RunIISummer20UL18MiniAODv2-WHGG0-wrapper.sh
 FRAGMENT = HIG-RunIISummer20UL18wmLHEGEN-WHGG0
 NEVENT = 100
-NTHREAD = 4
+NTHREAD = 1
 Arguments = $(X509UP) $(PROG) $(FRAGMENT) $(NEVENT) $(NTHREAD) $(SEED)
 
 requirements = (OpSysAndVer =?= "CentOS7")
-request_cpus = 4
+request_cpus = 1
 request_memory = 4096
 x509userproxy = $(X509UP)
 
