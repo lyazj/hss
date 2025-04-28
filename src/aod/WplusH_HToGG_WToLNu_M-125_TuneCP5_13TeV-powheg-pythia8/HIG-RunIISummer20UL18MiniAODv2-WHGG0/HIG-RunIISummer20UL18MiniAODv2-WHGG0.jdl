@@ -12,16 +12,15 @@ NEVENT = 100
 NTHREAD = 1
 Arguments = $(X509UP) $(PROG) $(FRAGMENT) $(NEVENT) $(NTHREAD) $(SEED)
 
-requirements = (OpSysAndVer =?= "CentOS7")
 request_cpus = 1
 request_memory = 4096
 x509userproxy = $(X509UP)
 
 +JobFlavour = "tomorrow"
 
-Log    = log/$(SEED).log
-Output = log/discard.log
-Error  = log/discard.log
+Log    = log/condor.log
+Output = log/stdout.log
+Error  = log/stderr.log
 
 should_transfer_files = YES
 transfer_input_files = $(Executable),HIG-RunIISummer20UL18MiniAODv2-WHGG0.sh,$(X509UP),$(PROG),$(FRAGMENT),HIG-RunIISummer20UL18DIGIPremix-02315.patch,patch_premix_inputs.py
